@@ -89,12 +89,14 @@ const SemanticUniqueIcon = ({ templateName, size = 28 }) => {
 // --- PREVIEW SKELETON ENGINE ---
 const PreviewSkeleton = ({ templateName, isDarkMode }) => {
   const name = templateName?.toLowerCase() || "";
+  
+  // 🌟 FIX: Bolder borders and darker text blocks for light mode visibility
   const baseBg = isDarkMode ? 'bg-[#1F263B]' : 'bg-white';
-  const borderCol = isDarkMode ? 'border-[#2E364F]' : 'border-slate-200';
-  const textDark = isDarkMode ? 'bg-slate-500' : 'bg-slate-300';
-  const textLight = isDarkMode ? 'bg-slate-600' : 'bg-slate-200';
+  const borderCol = isDarkMode ? 'border-[#2E364F]' : 'border-slate-300 shadow-sm';
+  const textDark = isDarkMode ? 'bg-slate-500' : 'bg-slate-400';
+  const textLight = isDarkMode ? 'bg-slate-600' : 'bg-slate-300';
   const accentLight = isDarkMode ? 'bg-indigo-500/20' : 'bg-indigo-100';
-  const accentDark = isDarkMode ? 'bg-indigo-500/50' : 'bg-indigo-300';
+  const accentDark = isDarkMode ? 'bg-indigo-500/50' : 'bg-indigo-400';
 
   if (name.includes('auto-detect') || name === 'ai auto-detect') {
     return (
@@ -111,9 +113,9 @@ const PreviewSkeleton = ({ templateName, isDarkMode }) => {
           <Sparkles size={20} className="mb-2 opacity-60" />
           <ArrowRight size={24} className="opacity-80" />
         </div>
-        <div className={`w-[40%] h-48 rounded-2xl border-2 p-4 flex flex-col items-center justify-center gap-3 ${baseBg} ${borderCol} shadow-lg`}>
+        <div className={`w-[40%] h-48 rounded-2xl border-2 p-4 flex flex-col items-center justify-center gap-3 ${baseBg} ${borderCol}`}>
           <div className={`w-20 h-8 rounded-lg border-2 ${borderCol}`}></div>
-          <div className={`w-1 h-4 ${borderCol} bg-slate-300 dark:bg-slate-600`}></div>
+          <div className={`w-1 h-4 ${isDarkMode ? 'bg-slate-600' : 'bg-slate-300'}`}></div>
           <div className="flex gap-2">
             <div className={`w-12 h-8 rounded-lg border-2 ${borderCol}`}></div>
             <div className={`w-12 h-8 rounded-lg border-2 ${borderCol}`}></div>
@@ -127,18 +129,18 @@ const PreviewSkeleton = ({ templateName, isDarkMode }) => {
     return (
       <div className="absolute inset-0 p-8 flex gap-4 h-full">
         {['To Do', 'Doing', 'Done'].map((col, i) => (
-          <div key={col} className={`flex-1 rounded-2xl p-4 flex flex-col gap-3 ${isDarkMode ? 'bg-[#1A2033]/50 border border-[#2E364F]' : 'bg-slate-100 border border-slate-200'}`}>
+          <div key={col} className={`flex-1 rounded-2xl p-4 flex flex-col gap-3 ${isDarkMode ? 'bg-[#1A2033]/50 border border-[#2E364F]' : 'bg-slate-50 border border-slate-200'}`}>
             <div className="flex items-center gap-2 mb-2">
               <div className={`w-3 h-3 rounded-full ${i === 0 ? 'bg-rose-400' : i === 1 ? 'bg-amber-400' : 'bg-emerald-400'}`}></div>
-              <div className={`w-1/2 h-3 rounded ${textDark}`}></div>
+              <div className={`w-1/2 h-3 rounded-full ${textDark}`}></div>
             </div>
-            <div className={`w-full h-16 rounded-xl border-2 p-3 flex flex-col justify-center shadow-sm ${baseBg} ${borderCol}`}>
-              <div className={`w-3/4 h-2 rounded mb-2 ${textDark}`}></div>
-              <div className={`w-1/2 h-2 rounded ${textLight}`}></div>
+            <div className={`w-full h-16 rounded-xl border-2 p-3 flex flex-col justify-center ${baseBg} ${borderCol}`}>
+              <div className={`w-3/4 h-2 rounded-full mb-2 ${textDark}`}></div>
+              <div className={`w-1/2 h-2 rounded-full ${textLight}`}></div>
             </div>
-            {i !== 2 && <div className={`w-full h-16 rounded-xl border-2 p-3 flex flex-col justify-center shadow-sm ${baseBg} ${borderCol}`}>
-              <div className={`w-4/5 h-2 rounded mb-2 ${textDark}`}></div>
-              <div className={`w-2/3 h-2 rounded ${textLight}`}></div>
+            {i !== 2 && <div className={`w-full h-16 rounded-xl border-2 p-3 flex flex-col justify-center ${baseBg} ${borderCol}`}>
+              <div className={`w-4/5 h-2 rounded-full mb-2 ${textDark}`}></div>
+              <div className={`w-2/3 h-2 rounded-full ${textLight}`}></div>
             </div>}
           </div>
         ))}
@@ -148,31 +150,31 @@ const PreviewSkeleton = ({ templateName, isDarkMode }) => {
 
   if (name.includes('sequence')) return (<div className="absolute inset-0 p-8 flex justify-center gap-16">{[1, 2].map(col => (<div key={col} className="relative flex flex-col items-center"><div className={`w-16 h-10 rounded-lg border-2 ${baseBg} ${borderCol} z-10 flex items-center justify-center`}><div className={`w-8 h-2 rounded-full ${textDark}`}></div></div><div className={`w-1 h-64 border-l-2 border-dashed ${isDarkMode ? 'border-slate-600' : 'border-slate-300'}`}></div></div>))}<div className={`absolute top-24 left-1/2 -translate-x-1/2 w-32 h-1 ${accentDark}`}></div><div className={`absolute top-40 left-1/2 -translate-x-1/2 w-32 h-1 ${accentDark}`}></div></div>);
   if (name.includes('microservices')) return (<div className="absolute inset-0 flex items-center justify-center"><div className="relative w-64 h-64"><div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border-4 z-10 ${baseBg} ${isDarkMode ? 'border-indigo-500/50' : 'border-indigo-300'}`}></div>{[0, 120, 240].map(deg => (<div key={deg} className={`absolute w-16 h-16 rounded-xl border-2 ${baseBg} ${borderCol}`} style={{ top: '50%', left: '50%', transform: `translate(-50%, -50%) rotate(${deg}deg) translateY(-80px) rotate(-${deg}deg)` }}></div>))}</div></div>);
-  if (name.includes('database') || name.includes('erd')) return (<div className="absolute inset-0 flex items-center justify-center gap-12 p-8">{[1, 2].map(col => (<div key={col} className={`w-48 rounded-xl border-2 shadow-lg flex flex-col overflow-hidden ${baseBg} ${borderCol} z-10`}><div className={`w-full h-10 ${accentLight} flex items-center px-4`}><div className={`w-24 h-3 rounded ${textDark}`}></div></div><div className="p-4 space-y-3">{[1,2,3].map(i => <div key={i} className="flex justify-between"><div className={`w-16 h-2 rounded ${textLight}`}></div><div className={`w-8 h-2 rounded ${textLight}`}></div></div>)}</div></div>))}<div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-1 ${accentDark}`}></div></div>);
-  if (name.includes('bug')) return (<div className="absolute inset-0 p-8 flex flex-col gap-4"><div className={`w-3/4 h-8 rounded-lg mb-1 ${textDark}`}></div><div className={`w-20 h-6 rounded-full mb-4 ${isDarkMode ? 'bg-red-500/30' : 'bg-red-200'}`}></div><div className={`w-full p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-32 h-3 rounded mb-3 ${textDark}`}></div><div className={`w-full h-2 rounded ${textLight}`}></div></div><div className={`w-full p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-40 h-3 rounded mb-3 ${textDark}`}></div><div className={`w-3/4 h-2 rounded ${textLight}`}></div></div></div>);
-  if (name.includes('sales')) return (<div className="absolute inset-0 p-8 flex flex-col gap-4">{['Budget', 'Authority', 'Need', 'Timeline'].map((bant) => (<div key={bant} className={`flex items-center gap-4 p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-8 h-8 rounded-lg ${accentLight}`}></div><div className="flex-1"><div className={`w-24 h-3 rounded mb-2 ${textDark}`}></div><div className={`w-full h-2 rounded ${textLight}`}></div></div></div>))}</div>);
-  if (name.includes('swot') || name.includes('matrix')) return (<div className="absolute inset-0 p-8 flex flex-col h-full"><div className="flex-1 grid grid-cols-2 grid-rows-2 gap-4">{[1, 2, 3, 4].map(i => (<div key={i} className={`rounded-xl border-2 p-5 flex flex-col gap-4 ${baseBg} ${borderCol}`}><div className={`w-1/3 h-4 rounded ${textDark}`}></div><div className={`w-full h-2 rounded ${textLight}`}></div><div className={`w-5/6 h-2 rounded ${textLight}`}></div></div>))}</div></div>);
+  if (name.includes('database') || name.includes('erd')) return (<div className="absolute inset-0 flex items-center justify-center gap-12 p-8">{[1, 2].map(col => (<div key={col} className={`w-48 rounded-xl border-2 flex flex-col overflow-hidden ${baseBg} ${borderCol} z-10`}><div className={`w-full h-10 ${accentLight} flex items-center px-4`}><div className={`w-24 h-3 rounded-full ${textDark}`}></div></div><div className="p-4 space-y-3">{[1,2,3].map(i => <div key={i} className="flex justify-between"><div className={`w-16 h-2 rounded-full ${textLight}`}></div><div className={`w-8 h-2 rounded-full ${textLight}`}></div></div>)}</div></div>))}<div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-1 ${accentDark}`}></div></div>);
+  if (name.includes('bug')) return (<div className="absolute inset-0 p-8 flex flex-col gap-4"><div className={`w-3/4 h-8 rounded-lg mb-1 ${textDark}`}></div><div className={`w-20 h-6 rounded-full mb-4 ${isDarkMode ? 'bg-red-500/30' : 'bg-red-200'}`}></div><div className={`w-full p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-32 h-3 rounded-full mb-3 ${textDark}`}></div><div className={`w-full h-2 rounded-full ${textLight}`}></div></div><div className={`w-full p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-40 h-3 rounded-full mb-3 ${textDark}`}></div><div className={`w-3/4 h-2 rounded-full ${textLight}`}></div></div></div>);
+  if (name.includes('sales')) return (<div className="absolute inset-0 p-8 flex flex-col gap-4">{['Budget', 'Authority', 'Need', 'Timeline'].map((bant) => (<div key={bant} className={`flex items-center gap-4 p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-8 h-8 rounded-lg ${accentLight}`}></div><div className="flex-1"><div className={`w-24 h-3 rounded-full mb-2 ${textDark}`}></div><div className={`w-full h-2 rounded-full ${textLight}`}></div></div></div>))}</div>);
+  if (name.includes('swot') || name.includes('matrix')) return (<div className="absolute inset-0 p-8 flex flex-col h-full"><div className="flex-1 grid grid-cols-2 grid-rows-2 gap-4">{[1, 2, 3, 4].map(i => (<div key={i} className={`rounded-xl border-2 p-5 flex flex-col gap-4 ${baseBg} ${borderCol}`}><div className={`w-1/3 h-4 rounded-full ${textDark}`}></div><div className={`w-full h-2 rounded-full ${textLight}`}></div><div className={`w-5/6 h-2 rounded-full ${textLight}`}></div></div>))}</div></div>);
   if (name.includes('onboarding')) return (<div className="absolute inset-0 p-8 flex items-end gap-2">{[40, 60, 80, 100].map((height, i) => (<div key={i} className={`flex-1 rounded-t-xl border-t-2 border-x-2 ${baseBg} ${borderCol}`} style={{ height: `${height}%` }}><div className={`m-4 w-8 h-8 rounded-full ${accentLight} flex justify-center items-center`}><div className={`w-3 h-3 rounded-full ${accentDark}`}></div></div></div>))}</div>);
-  if (name.includes('medical')) return (<div className="absolute inset-0 p-8 flex flex-col gap-6"><div className={`w-full h-16 rounded-xl border-2 flex items-center justify-center overflow-hidden ${baseBg} ${borderCol}`}><svg className={`w-full h-8 ${isDarkMode ? 'text-rose-500/50' : 'text-rose-300'}`} viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 20,10 30,0 40,20 50,10 100,10" fill="none" stroke="currentColor" strokeWidth="2"/></svg></div><div className="flex gap-4"><div className={`w-1/3 h-24 rounded-xl border-2 ${baseBg} ${borderCol} p-4`}><div className={`w-12 h-3 rounded mb-2 ${textDark}`}></div><div className={`w-20 h-6 rounded ${textLight}`}></div></div><div className={`w-1/3 h-24 rounded-xl border-2 ${baseBg} ${borderCol} p-4`}><div className={`w-12 h-3 rounded mb-2 ${textDark}`}></div><div className={`w-20 h-6 rounded ${textLight}`}></div></div><div className={`w-1/3 h-24 rounded-xl border-2 ${baseBg} ${borderCol} p-4`}><div className={`w-12 h-3 rounded mb-2 ${textDark}`}></div><div className={`w-20 h-6 rounded ${textLight}`}></div></div></div></div>);
-  if (name.includes('soap')) return (<div className="absolute inset-0 p-8 flex flex-col gap-3">{['S', 'O', 'A', 'P'].map((section, i) => (<div key={section} className={`flex gap-4 items-center w-full p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-8 h-8 rounded-lg font-bold flex items-center justify-center ${isDarkMode ? 'bg-indigo-900/50 text-indigo-300' : 'bg-indigo-100 text-indigo-700'}`}>{section}</div><div className="flex-1"><div className={`w-full h-2 rounded mb-2 ${textLight}`}></div><div className={`w-4/5 h-2 rounded ${textLight}`}></div></div></div>))}</div>);
-  if (name.includes('therapy')) return (<div className="absolute inset-0 p-8 flex flex-col gap-6">{[1, 2, 3].map((i) => (<div key={i} className={`flex w-full ${i % 2 === 0 ? 'justify-end' : 'justify-start'}`}><div className={`max-w-[70%] p-4 rounded-2xl relative ${i % 2 === 0 ? accentLight : `${baseBg} border-2 ${borderCol}`}`}>{i !== 2 && <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${isDarkMode ? 'bg-rose-500/50' : 'bg-rose-300'}`}></div>}<div className={`w-full h-2 rounded mb-2 ${textLight}`}></div><div className={`w-5/6 h-2 rounded ${textLight}`}></div></div></div>))}</div>);
-  if (name.includes('legal')) return (<div className="absolute inset-0 py-8 px-16 flex flex-col gap-4"><div className={`w-full h-12 rounded-lg border-2 flex items-center justify-center mb-4 ${baseBg} ${borderCol}`}><div className={`w-8 h-8 rounded-full ${accentDark}`}></div></div><div className={`w-full h-3 rounded ${textDark}`}></div><div className={`w-full h-3 rounded ${textDark}`}></div><div className="flex gap-4 items-center"><div className={`w-full h-3 rounded ${textLight}`}></div><div className={`w-2 h-12 rounded-full ${isDarkMode ? 'bg-red-500/50' : 'bg-red-300'}`}></div></div><div className={`w-5/6 h-3 rounded ${textDark}`}></div></div>);
-  if (name.includes('deposition')) return (<div className="absolute inset-0 p-8 flex flex-col gap-4">{[1, 2].map((i) => (<div key={i} className="flex gap-4"><div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${isDarkMode ? 'bg-slate-800 text-slate-400' : 'bg-slate-200 text-slate-600'}`}>Q</div><div className={`flex-1 p-3 rounded-xl ${baseBg} border-2 ${borderCol}`}><div className={`w-3/4 h-2 rounded ${textDark}`}></div></div></div>))}<div className="flex gap-4 pl-12"><div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${accentLight} ${isDarkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>A</div><div className={`flex-1 p-3 rounded-xl ${accentLight}`}><div className={`w-full h-2 rounded ${accentDark}`}></div></div></div></div>);
-  if (name.includes('compliance')) return (<div className="absolute inset-0 p-8 flex flex-col gap-4">{[1, 2, 3, 4].map((i) => (<div key={i} className={`flex items-center gap-4 p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-6 h-6 rounded-full border-2 ${i===3 ? (isDarkMode ? 'border-red-500' : 'border-red-400') : (isDarkMode ? 'border-emerald-500' : 'border-emerald-400')}`}></div><div className="flex-1"><div className={`w-1/2 h-3 rounded ${textDark}`}></div></div></div>))}</div>);
-  if (name.includes('1-on-1')) return (<div className="absolute inset-0 p-8 flex flex-col h-full"><div className="flex justify-center gap-8 mb-6"><div className={`w-16 h-16 rounded-full border-4 ${baseBg} ${borderCol}`}></div><div className={`w-16 h-16 rounded-full border-4 ${accentLight} ${isDarkMode ? 'border-indigo-500/30' : 'border-indigo-200'}`}></div></div><div className="flex gap-6 flex-1"><div className={`flex-1 rounded-xl p-4 border-2 ${baseBg} ${borderCol}`}><div className={`w-1/2 h-3 rounded mb-3 ${textDark}`}></div><div className={`w-full h-2 rounded ${textLight}`}></div></div><div className={`flex-1 rounded-xl p-4 border-2 ${baseBg} ${borderCol}`}><div className={`w-1/2 h-3 rounded mb-3 ${textDark}`}></div><div className={`w-full h-2 rounded ${textLight}`}></div></div></div></div>);
-  if (name.includes('candidate')) return (<div className="absolute inset-0 p-8 flex flex-col gap-5"><div className="flex gap-4 items-center"><div className={`w-20 h-20 rounded-xl ${accentLight}`}></div><div><div className={`w-32 h-4 rounded mb-2 ${textDark}`}></div><div className={`w-24 h-3 rounded ${textLight}`}></div></div></div><div className={`w-full h-1 ${borderCol}`}></div><div className="flex gap-2">{[1,2,3].map(i => <div key={i} className={`w-16 h-6 rounded-full border-2 ${baseBg} ${borderCol}`}></div>)}</div><div className="flex-1 space-y-3 pt-2"><div className={`w-full h-3 rounded ${textLight}`}></div><div className={`w-5/6 h-3 rounded ${textLight}`}></div></div></div>);
-  if (name.includes('exit')) return (<div className="absolute inset-0 p-8 flex flex-col gap-6"><div className={`w-1/2 h-6 rounded ${textDark} mb-2`}></div>{[1, 2].map(row => (<div key={row} className={`w-full p-4 rounded-xl border-2 flex items-center justify-between ${baseBg} ${borderCol}`}><div className={`w-1/3 h-3 rounded ${textDark}`}></div><div className="flex gap-2">{[1,2,3,4,5].map(i => <div key={i} className={`w-6 h-6 rounded-full ${i <= 3 ? accentDark : (isDarkMode ? 'bg-slate-700' : 'bg-slate-200')}`}></div>)}</div></div>))}</div>);
-  if (name.includes('ux')) return (<div className="absolute inset-0 p-8 flex gap-6"><div className={`w-1/3 rounded-2xl border-2 p-4 flex flex-col items-center ${baseBg} ${borderCol}`}><div className={`w-16 h-16 rounded-full mb-4 ${accentLight}`}></div><div className={`w-20 h-3 rounded mb-2 ${textDark}`}></div><div className={`w-16 h-2 rounded ${textLight}`}></div></div><div className="flex-1 flex flex-col gap-4">{[1,2,3].map(i => (<div key={i} className={`flex-1 rounded-xl border-2 flex items-center px-4 ${baseBg} ${borderCol}`}><div className={`w-3/4 h-2 rounded ${textLight}`}></div></div>))}</div></div>);
-  if (name.includes('video')) return (<div className="absolute inset-0 p-8 grid grid-cols-2 grid-rows-2 gap-6">{[1, 2, 3, 4].map(i => (<div key={i} className="flex flex-col gap-2"><div className={`flex-1 rounded-lg border-2 ${baseBg} ${borderCol} flex items-center justify-center`}><div className={`w-6 h-6 rounded-full ${accentLight}`}></div></div><div className={`w-full h-2 rounded ${textLight}`}></div><div className={`w-2/3 h-2 rounded ${textLight}`}></div></div>))}</div>);
-  if (name.includes('creative')) return (<div className="absolute inset-0 flex items-center justify-center"><div className={`absolute w-24 h-24 rounded-lg shadow-lg transform -rotate-12 -translate-x-12 -translate-y-12 p-3 ${isDarkMode ? 'bg-rose-900/50' : 'bg-rose-100'}`}><div className={`w-1/2 h-2 rounded mb-2 bg-rose-500/50`}></div><div className={`w-full h-1 rounded bg-rose-500/30`}></div></div><div className={`absolute w-24 h-24 rounded-lg shadow-lg transform rotate-6 translate-x-16 -translate-y-8 p-3 ${isDarkMode ? 'bg-amber-900/50' : 'bg-amber-100'}`}><div className={`w-1/2 h-2 rounded mb-2 bg-amber-500/50`}></div></div><div className={`absolute w-24 h-24 rounded-lg shadow-lg transform rotate-12 -translate-x-4 translate-y-12 p-3 ${isDarkMode ? 'bg-emerald-900/50' : 'bg-emerald-100'}`}><div className={`w-3/4 h-2 rounded mb-2 bg-emerald-500/50`}></div><div className={`w-full h-1 rounded bg-emerald-500/30`}></div></div><div className={`absolute w-24 h-24 rounded-lg shadow-lg transform -rotate-6 translate-x-20 translate-y-16 p-3 ${isDarkMode ? 'bg-indigo-900/50' : 'bg-indigo-100'}`}><div className={`w-1/2 h-2 rounded mb-2 bg-indigo-500/50`}></div></div></div>);
+  if (name.includes('medical')) return (<div className="absolute inset-0 p-8 flex flex-col gap-6"><div className={`w-full h-16 rounded-xl border-2 flex items-center justify-center overflow-hidden ${baseBg} ${borderCol}`}><svg className={`w-full h-8 ${isDarkMode ? 'text-rose-500/50' : 'text-rose-300'}`} viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 20,10 30,0 40,20 50,10 100,10" fill="none" stroke="currentColor" strokeWidth="2"/></svg></div><div className="flex gap-4"><div className={`w-1/3 h-24 rounded-xl border-2 ${baseBg} ${borderCol} p-4`}><div className={`w-12 h-3 rounded-full mb-2 ${textDark}`}></div><div className={`w-20 h-6 rounded-full ${textLight}`}></div></div><div className={`w-1/3 h-24 rounded-xl border-2 ${baseBg} ${borderCol} p-4`}><div className={`w-12 h-3 rounded-full mb-2 ${textDark}`}></div><div className={`w-20 h-6 rounded-full ${textLight}`}></div></div><div className={`w-1/3 h-24 rounded-xl border-2 ${baseBg} ${borderCol} p-4`}><div className={`w-12 h-3 rounded-full mb-2 ${textDark}`}></div><div className={`w-20 h-6 rounded-full ${textLight}`}></div></div></div></div>);
+  if (name.includes('soap')) return (<div className="absolute inset-0 p-8 flex flex-col gap-3">{['S', 'O', 'A', 'P'].map((section, i) => (<div key={section} className={`flex gap-4 items-center w-full p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-8 h-8 rounded-lg font-bold flex items-center justify-center ${isDarkMode ? 'bg-indigo-900/50 text-indigo-300' : 'bg-indigo-100 text-indigo-700'}`}>{section}</div><div className="flex-1"><div className={`w-full h-2 rounded-full mb-2 ${textLight}`}></div><div className={`w-4/5 h-2 rounded-full ${textLight}`}></div></div></div>))}</div>);
+  if (name.includes('therapy')) return (<div className="absolute inset-0 p-8 flex flex-col gap-6">{[1, 2, 3].map((i) => (<div key={i} className={`flex w-full ${i % 2 === 0 ? 'justify-end' : 'justify-start'}`}><div className={`max-w-[70%] p-4 rounded-2xl relative border-2 ${borderCol} ${i % 2 === 0 ? accentLight : baseBg}`}>{i !== 2 && <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full ${isDarkMode ? 'bg-rose-500/50' : 'bg-rose-300'}`}></div>}<div className={`w-full h-2 rounded-full mb-2 ${textLight}`}></div><div className={`w-5/6 h-2 rounded-full ${textLight}`}></div></div></div>))}</div>);
+  if (name.includes('legal')) return (<div className="absolute inset-0 py-8 px-16 flex flex-col gap-4"><div className={`w-full h-12 rounded-lg border-2 flex items-center justify-center mb-4 ${baseBg} ${borderCol}`}><div className={`w-8 h-8 rounded-full ${accentDark}`}></div></div><div className={`w-full h-3 rounded-full ${textDark}`}></div><div className={`w-full h-3 rounded-full ${textDark}`}></div><div className="flex gap-4 items-center"><div className={`w-full h-3 rounded-full ${textLight}`}></div><div className={`w-2 h-12 rounded-full ${isDarkMode ? 'bg-red-500/50' : 'bg-red-300'}`}></div></div><div className={`w-5/6 h-3 rounded-full ${textDark}`}></div></div>);
+  if (name.includes('deposition')) return (<div className="absolute inset-0 p-8 flex flex-col gap-4">{[1, 2].map((i) => (<div key={i} className="flex gap-4"><div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${isDarkMode ? 'bg-slate-800 text-slate-400' : 'bg-slate-200 text-slate-600'}`}>Q</div><div className={`flex-1 p-3 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-3/4 h-2 rounded-full ${textDark}`}></div></div></div>))}<div className="flex gap-4 pl-12"><div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${accentLight} ${isDarkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>A</div><div className={`flex-1 p-3 rounded-xl ${accentLight}`}><div className={`w-full h-2 rounded-full ${accentDark}`}></div></div></div></div>);
+  if (name.includes('compliance')) return (<div className="absolute inset-0 p-8 flex flex-col gap-4">{[1, 2, 3, 4].map((i) => (<div key={i} className={`flex items-center gap-4 p-4 rounded-xl border-2 ${baseBg} ${borderCol}`}><div className={`w-6 h-6 rounded-full border-2 ${i===3 ? (isDarkMode ? 'border-red-500' : 'border-red-400') : (isDarkMode ? 'border-emerald-500' : 'border-emerald-400')}`}></div><div className="flex-1"><div className={`w-1/2 h-3 rounded-full ${textDark}`}></div></div></div>))}</div>);
+  if (name.includes('1-on-1')) return (<div className="absolute inset-0 p-8 flex flex-col h-full"><div className="flex justify-center gap-8 mb-6"><div className={`w-16 h-16 rounded-full border-4 ${baseBg} ${borderCol}`}></div><div className={`w-16 h-16 rounded-full border-4 ${accentLight} ${isDarkMode ? 'border-indigo-500/30' : 'border-indigo-200'}`}></div></div><div className="flex gap-6 flex-1"><div className={`flex-1 rounded-xl p-4 border-2 ${baseBg} ${borderCol}`}><div className={`w-1/2 h-3 rounded-full mb-3 ${textDark}`}></div><div className={`w-full h-2 rounded-full ${textLight}`}></div></div><div className={`flex-1 rounded-xl p-4 border-2 ${baseBg} ${borderCol}`}><div className={`w-1/2 h-3 rounded-full mb-3 ${textDark}`}></div><div className={`w-full h-2 rounded-full ${textLight}`}></div></div></div></div>);
+  if (name.includes('candidate')) return (<div className="absolute inset-0 p-8 flex flex-col gap-5"><div className="flex gap-4 items-center"><div className={`w-20 h-20 rounded-xl ${accentLight}`}></div><div><div className={`w-32 h-4 rounded-full mb-2 ${textDark}`}></div><div className={`w-24 h-3 rounded-full ${textLight}`}></div></div></div><div className={`w-full h-1 ${isDarkMode ? 'bg-[#2E364F]' : 'bg-slate-300'}`}></div><div className="flex gap-2">{[1,2,3].map(i => <div key={i} className={`w-16 h-6 rounded-full border-2 ${baseBg} ${borderCol}`}></div>)}</div><div className="flex-1 space-y-3 pt-2"><div className={`w-full h-3 rounded-full ${textLight}`}></div><div className={`w-5/6 h-3 rounded-full ${textLight}`}></div></div></div>);
+  if (name.includes('exit')) return (<div className="absolute inset-0 p-8 flex flex-col gap-6"><div className={`w-1/2 h-6 rounded-full ${textDark} mb-2`}></div>{[1, 2].map(row => (<div key={row} className={`w-full p-4 rounded-xl border-2 flex items-center justify-between ${baseBg} ${borderCol}`}><div className={`w-1/3 h-3 rounded-full ${textDark}`}></div><div className="flex gap-2">{[1,2,3,4,5].map(i => <div key={i} className={`w-6 h-6 rounded-full ${i <= 3 ? accentDark : (isDarkMode ? 'bg-slate-700' : 'bg-slate-200')}`}></div>)}</div></div>))}</div>);
+  if (name.includes('ux')) return (<div className="absolute inset-0 p-8 flex gap-6"><div className={`w-1/3 rounded-2xl border-2 p-4 flex flex-col items-center ${baseBg} ${borderCol}`}><div className={`w-16 h-16 rounded-full mb-4 ${accentLight}`}></div><div className={`w-20 h-3 rounded-full mb-2 ${textDark}`}></div><div className={`w-16 h-2 rounded-full ${textLight}`}></div></div><div className="flex-1 flex flex-col gap-4">{[1,2,3].map(i => (<div key={i} className={`flex-1 rounded-xl border-2 flex items-center px-4 ${baseBg} ${borderCol}`}><div className={`w-3/4 h-2 rounded-full ${textLight}`}></div></div>))}</div></div>);
+  if (name.includes('video')) return (<div className="absolute inset-0 p-8 grid grid-cols-2 grid-rows-2 gap-6">{[1, 2, 3, 4].map(i => (<div key={i} className="flex flex-col gap-2"><div className={`flex-1 rounded-lg border-2 ${baseBg} ${borderCol} flex items-center justify-center`}><div className={`w-6 h-6 rounded-full ${accentLight}`}></div></div><div className={`w-full h-2 rounded-full ${textLight}`}></div><div className={`w-2/3 h-2 rounded-full ${textLight}`}></div></div>))}</div>);
+  if (name.includes('creative')) return (<div className="absolute inset-0 flex items-center justify-center"><div className={`absolute w-24 h-24 rounded-lg shadow-lg transform -rotate-12 -translate-x-12 -translate-y-12 p-3 ${isDarkMode ? 'bg-rose-900/50' : 'bg-rose-100'}`}><div className={`w-1/2 h-2 rounded-full mb-2 bg-rose-500/50`}></div><div className={`w-full h-1 rounded-full bg-rose-500/30`}></div></div><div className={`absolute w-24 h-24 rounded-lg shadow-lg transform rotate-6 translate-x-16 -translate-y-8 p-3 ${isDarkMode ? 'bg-amber-900/50' : 'bg-amber-100'}`}><div className={`w-1/2 h-2 rounded-full mb-2 bg-amber-500/50`}></div></div><div className={`absolute w-24 h-24 rounded-lg shadow-lg transform rotate-12 -translate-x-4 translate-y-12 p-3 ${isDarkMode ? 'bg-emerald-900/50' : 'bg-emerald-100'}`}><div className={`w-3/4 h-2 rounded-full mb-2 bg-emerald-500/50`}></div><div className={`w-full h-1 rounded-full bg-emerald-500/30`}></div></div><div className={`absolute w-24 h-24 rounded-lg shadow-lg transform -rotate-6 translate-x-20 translate-y-16 p-3 ${isDarkMode ? 'bg-indigo-900/50' : 'bg-indigo-100'}`}><div className={`w-1/2 h-2 rounded-full mb-2 bg-indigo-500/50`}></div></div></div>);
   if (name.includes('weekly')) return (<div className="absolute inset-0 p-8 flex gap-2 h-full">{[1,2,3,4,5].map(day => (<div key={day} className={`flex-1 rounded-lg border-2 flex flex-col items-center py-4 gap-2 ${baseBg} ${borderCol}`}><div className={`w-4 h-4 rounded-full mb-2 ${textDark}`}></div>{day % 2 !== 0 && <div className={`w-4/5 h-12 rounded bg-indigo-500/20`}></div>}{day === 2 && <div className={`w-4/5 h-8 rounded bg-rose-500/20`}></div>}</div>))}</div>);
-  if (name.includes('mind map')) return (<div className="absolute inset-0 flex items-center justify-center"><div className={`w-20 h-10 rounded-full border-4 flex items-center justify-center z-10 ${baseBg} ${borderCol}`}><div className={`w-8 h-2 rounded ${textDark}`}></div></div><div className={`absolute top-12 left-12 w-16 h-8 rounded-full border-2 z-10 ${baseBg} ${borderCol}`}></div><div className={`absolute w-20 h-1 bg-indigo-500/30 transform rotate-45 -translate-x-8 -translate-y-8`}></div><div className={`absolute top-12 right-12 w-16 h-8 rounded-full border-2 z-10 ${baseBg} ${borderCol}`}></div><div className={`absolute w-20 h-1 bg-indigo-500/30 transform -rotate-45 translate-x-8 -translate-y-8`}></div><div className={`absolute bottom-12 left-1/2 -translate-x-1/2 w-16 h-8 rounded-full border-2 z-10 ${baseBg} ${borderCol}`}></div><div className={`absolute w-1 h-12 bg-indigo-500/30 translate-y-12`}></div></div>);
-  if (name.includes('historical')) return (<div className="absolute inset-0 p-8 flex justify-center"><div className={`w-1 h-full rounded-full relative ${isDarkMode ? 'bg-slate-700' : 'bg-slate-300'}`}>{[20, 50, 80].map((top, i) => (<div key={top} className={`absolute w-3 h-3 rounded-full -left-1 flex items-center ${textDark}`} style={{ top: `${top}%` }}><div className={`absolute w-32 p-3 rounded-lg border-2 flex flex-col gap-2 ${i % 2 === 0 ? 'left-6' : 'right-6'} ${baseBg} ${borderCol}`}><div className={`w-1/3 h-2 rounded ${textDark}`}></div><div className={`w-full h-1.5 rounded ${textLight}`}></div></div></div>))}</div></div>);
-  if (name.includes('flashcard')) return (<div className="absolute inset-0 flex items-center justify-center p-8"><div className={`relative w-48 h-64 rounded-3xl border-4 shadow-xl ${baseBg} ${borderCol} z-0 transform rotate-6 translate-x-4 opacity-50`}></div><div className={`absolute w-48 h-64 rounded-3xl border-4 shadow-2xl p-6 flex flex-col justify-center items-center ${baseBg} ${borderCol} z-10 transform -rotate-2 -translate-x-2`}><div className={`w-3/4 h-4 rounded-full mb-6 ${textDark}`}></div><div className={`w-full h-2 rounded-full mb-3 ${textLight}`}></div><div className={`w-5/6 h-2 rounded-full ${textLight}`}></div></div></div>);
-  if (name.includes('math') || name.includes('proof')) return (<div className="absolute inset-0 p-10 flex flex-col items-center gap-6"><div className={`w-32 h-4 rounded ${textDark}`}></div><div className={`w-40 h-3 rounded ${textLight}`}></div><div className={`w-1 h-4 border-l-2 border-dashed ${borderCol}`}></div><div className={`w-48 h-3 rounded ${textLight}`}></div><div className={`w-1 h-4 border-l-2 border-dashed ${borderCol}`}></div><div className={`w-24 h-8 rounded-lg border-2 flex items-center justify-center ${baseBg} ${borderCol}`}><div className={`w-12 h-2 rounded ${accentDark}`}></div></div></div>);
+  if (name.includes('mind map')) return (<div className="absolute inset-0 flex items-center justify-center"><div className={`w-20 h-10 rounded-full border-4 flex items-center justify-center z-10 ${baseBg} ${borderCol}`}><div className={`w-8 h-2 rounded-full ${textDark}`}></div></div><div className={`absolute top-12 left-12 w-16 h-8 rounded-full border-2 z-10 ${baseBg} ${borderCol}`}></div><div className={`absolute w-20 h-1 bg-indigo-500/30 transform rotate-45 -translate-x-8 -translate-y-8`}></div><div className={`absolute top-12 right-12 w-16 h-8 rounded-full border-2 z-10 ${baseBg} ${borderCol}`}></div><div className={`absolute w-20 h-1 bg-indigo-500/30 transform -rotate-45 translate-x-8 -translate-y-8`}></div><div className={`absolute bottom-12 left-1/2 -translate-x-1/2 w-16 h-8 rounded-full border-2 z-10 ${baseBg} ${borderCol}`}></div><div className={`absolute w-1 h-12 bg-indigo-500/30 translate-y-12`}></div></div>);
+  if (name.includes('historical')) return (<div className="absolute inset-0 p-8 flex justify-center"><div className={`w-1 h-full rounded-full relative ${isDarkMode ? 'bg-slate-700' : 'bg-slate-300'}`}>{[20, 50, 80].map((top, i) => (<div key={top} className={`absolute w-3 h-3 rounded-full -left-1 flex items-center ${textDark}`} style={{ top: `${top}%` }}><div className={`absolute w-32 p-3 rounded-lg border-2 flex flex-col gap-2 ${i % 2 === 0 ? 'left-6' : 'right-6'} ${baseBg} ${borderCol}`}><div className={`w-1/3 h-2 rounded-full ${textDark}`}></div><div className={`w-full h-1.5 rounded-full ${textLight}`}></div></div></div>))}</div></div>);
+  if (name.includes('flashcard')) return (<div className="absolute inset-0 flex items-center justify-center p-8"><div className={`relative w-48 h-64 rounded-3xl border-4 ${borderCol} ${baseBg} z-0 transform rotate-6 translate-x-4 opacity-50`}></div><div className={`absolute w-48 h-64 rounded-3xl border-4 ${borderCol} ${baseBg} p-6 flex flex-col justify-center items-center z-10 transform -rotate-2 -translate-x-2`}><div className={`w-3/4 h-4 rounded-full mb-6 ${textDark}`}></div><div className={`w-full h-2 rounded-full mb-3 ${textLight}`}></div><div className={`w-5/6 h-2 rounded-full ${textLight}`}></div></div></div>);
+  if (name.includes('math') || name.includes('proof')) return (<div className="absolute inset-0 p-10 flex flex-col items-center gap-6"><div className={`w-32 h-4 rounded-full ${textDark}`}></div><div className={`w-40 h-3 rounded-full ${textLight}`}></div><div className={`w-1 h-4 border-l-2 border-dashed ${isDarkMode ? 'border-[#2E364F]' : 'border-slate-300'}`}></div><div className={`w-48 h-3 rounded-full ${textLight}`}></div><div className={`w-1 h-4 border-l-2 border-dashed ${isDarkMode ? 'border-[#2E364F]' : 'border-slate-300'}`}></div><div className={`w-24 h-8 rounded-lg border-2 flex items-center justify-center ${baseBg} ${borderCol}`}><div className={`w-12 h-2 rounded-full ${accentDark}`}></div></div></div>);
 
   // FALLBACK
-  return (<div className="absolute inset-0 p-10 flex flex-col"><div className={`w-1/2 h-8 rounded-lg mb-4 ${textDark}`}></div><div className={`w-1/3 h-4 rounded-md mb-8 ${textLight}`}></div><div className="space-y-8">{[1, 2, 3].map((i) => (<div key={i} className="flex items-start gap-5"><div className={`w-8 h-8 rounded-md shrink-0 mt-1 ${accentDark}`}></div><div className="flex-1 space-y-4"><div className={`w-full h-4 rounded-md ${textDark}`}></div><div className={`w-5/6 h-4 rounded-md ${textDark}`}></div>{i !== 3 && <div className={`w-2/3 h-4 rounded-md ${textLight}`}></div>}</div></div>))}</div></div>);
+  return (<div className="absolute inset-0 p-10 flex flex-col"><div className={`w-1/2 h-8 rounded-lg mb-4 ${textDark}`}></div><div className={`w-1/3 h-4 rounded-md mb-8 ${textLight}`}></div><div className="space-y-8">{[1, 2, 3].map((i) => (<div key={i} className="flex items-start gap-5"><div className={`w-8 h-8 rounded-md shrink-0 mt-1 ${accentDark}`}></div><div className="flex-1 space-y-4"><div className={`w-full h-4 rounded-full ${textDark}`}></div><div className={`w-5/6 h-4 rounded-full ${textDark}`}></div>{i !== 3 && <div className={`w-2/3 h-4 rounded-full ${textLight}`}></div>}</div></div>))}</div></div>);
 };
 
 export default function TemplatesTab({ isDarkMode, templateFilter, setTemplateFilter, templateCategories, templatesDB, setActiveAiTemplate, setActiveTab, showToast }) {
@@ -223,7 +225,7 @@ export default function TemplatesTab({ isDarkMode, templateFilter, setTemplateFi
   return (
     <div className="space-y-6 relative">
       
-      {/* 🌟 PREVIEW MODAL */}
+      {/* PREVIEW MODAL */}
       <AnimatePresence>
         {previewTemplate && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
@@ -242,7 +244,7 @@ export default function TemplatesTab({ isDarkMode, templateFilter, setTemplateFi
                 </div>
                 <button onClick={() => setPreviewTemplate(null)} className={`p-2.5 rounded-full transition-colors ${isDarkMode ? 'hover:bg-[#1F263B] text-slate-400 hover:text-white' : 'hover:bg-slate-100 text-slate-500 hover:text-slate-900'}`}><X size={24} /></button>
               </div>
-              <div className={`flex-1 min-h-[350px] relative overflow-hidden border-y ${isDarkMode ? 'bg-[#0E121E] border-white/5' : 'bg-slate-50 border-slate-100'}`}>
+              <div className={`flex-1 min-h-[350px] relative overflow-hidden border-y ${isDarkMode ? 'bg-[#0E121E] border-[#2E364F]' : 'bg-slate-50 border-slate-200'}`}>
                 <PreviewSkeleton templateName={previewTemplate.name} isDarkMode={isDarkMode} />
                 <div className={`absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t pointer-events-none ${isDarkMode ? 'from-[#0E121E] to-transparent' : 'from-slate-50 to-transparent'}`}></div>
               </div>
@@ -255,77 +257,70 @@ export default function TemplatesTab({ isDarkMode, templateFilter, setTemplateFi
         )}
       </AnimatePresence>
 
-      {/* 🌟 HERO BANNER */}
-      <div className={`w-full rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-2xl mb-8 ${isDarkMode ? "bg-[#131722] border border-[#2A2F3D]" : "bg-indigo-600 border-transparent text-white"}`}>
+      {/* 🌟 UNIFIED ULTRA-COMPACT HERO BANNER */}
+      <div className={`w-full rounded-3xl p-6 md:px-8 relative overflow-hidden shadow-sm border mb-8 flex flex-col justify-center ${isDarkMode ? "bg-[#131722] border-[#2A2F3D]" : "bg-white border-slate-200"}`}>
         <div className="absolute inset-0 pointer-events-none">
-          <div className={`absolute top-0 right-0 w-96 h-96 blur-[100px] rounded-full ${isDarkMode ? "bg-indigo-600/20" : "bg-white/20"}`}></div>
-          <div className={`absolute -bottom-24 -left-24 w-96 h-96 blur-[100px] rounded-full ${isDarkMode ? "bg-blue-600/20" : "bg-indigo-400/30"}`}></div>
+          <div className={`absolute top-0 right-0 w-64 h-64 blur-[80px] rounded-full ${isDarkMode ? "bg-indigo-600/20" : "bg-indigo-300/30"}`}></div>
+          <div className={`absolute -bottom-24 -left-24 w-64 h-64 blur-[80px] rounded-full ${isDarkMode ? "bg-blue-600/20" : "bg-blue-300/30"}`}></div>
         </div>
         
-        <div className="relative z-10 max-w-2xl">
-          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest mb-6 border ${isDarkMode ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/30" : "bg-white/20 text-indigo-50 border-white/20"}`}>
-            <Sparkles size={14} /> Template Gallery
+        <div className="relative z-10 max-w-2xl flex flex-col md:flex-row md:items-center justify-between w-full">
+           <div>
+             <div className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest mb-2 border ${isDarkMode ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/30" : "bg-indigo-50 text-indigo-600 border-indigo-200"}`}>
+               <Sparkles size={12} /> Template Gallery
+             </div>
+             <h2 className={`text-2xl md:text-3xl font-extrabold tracking-tight mb-1 ${isDarkMode ? "text-white" : "text-slate-900"}`}>
+               Structure your thoughts.
+             </h2>
+             <p className={`text-sm font-medium leading-relaxed ${isDarkMode ? "text-slate-400" : "text-slate-600"}`}>
+               Choose a framework before recording to extract structured diagrams.
+             </p>
+           </div>
+        </div>
+        <LayoutTemplate className={`absolute -right-4 -bottom-4 w-40 h-40 opacity-10 pointer-events-none ${isDarkMode ? "text-white" : "text-indigo-600"}`} />
+      </div>
+
+      {/* UNIFIED TOOLBAR: Filters on Left, Search on Right */}
+      <div className="sticky top-0 z-40 flex flex-col-reverse xl:flex-row justify-between items-center gap-4 w-full pt-2 pb-4 bg-transparent">
+        
+        {/* Filter Pills */}
+        <div className={`inline-flex items-center p-1.5 rounded-[1.25rem] shadow-sm border overflow-x-auto custom-scrollbar max-w-full backdrop-blur-xl w-full xl:w-auto ${isDarkMode ? 'bg-[#131722]/85 border-[#2A2F3D]' : 'bg-white/90 border-slate-200'}`}>
+          <div className="flex items-center gap-1 shrink-0 px-1">
+            {displayCategories.map(cat => (
+              <button 
+                key={cat} 
+                onClick={() => setTemplateFilter(cat)} 
+                className={`relative px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap shrink-0 ${currentFilter === cat ? (isDarkMode ? 'text-white' : 'text-slate-900') : (isDarkMode ? 'text-slate-400 hover:text-slate-200 hover:bg-[#1A2033]' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50')}`}
+              >
+                {currentFilter === cat && <motion.div layoutId="activeFilterBubble" className={`absolute inset-0 rounded-xl shadow-sm border ${isDarkMode ? 'bg-[#1F263B] border-[#2E364F]' : 'bg-white border-slate-200'}`} transition={{ type: "spring", stiffness: 300, damping: 30 }} />}
+                <span className="relative z-10 flex items-center gap-1.5">
+                  {cat === 'Favorites' && <Star size={12} className={currentFilter === cat ? 'text-amber-500 fill-amber-500' : 'text-slate-400'} />} 
+                  {cat}
+                </span>
+              </button>
+            ))}
           </div>
-          <h2 className={`text-4xl md:text-5xl font-extrabold tracking-tight mb-4 ${isDarkMode ? "text-white" : "text-white"}`}>
-            Structure your thoughts.
-          </h2>
-          <p className={`text-lg font-medium leading-relaxed ${isDarkMode ? "text-slate-400" : "text-indigo-100"}`}>
-            Choose an AI framework before you start recording. Spoly will automatically extract and structure your live conversation into the perfect diagram or document format.
-          </p>
         </div>
-        <LayoutTemplate className={`absolute -right-8 -bottom-8 w-64 h-64 opacity-10 pointer-events-none ${isDarkMode ? "text-white" : "text-indigo-900"}`} />
-      </div>
 
-      {/* 🌟 TITLE ROW */}
-      <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
-        <div>
-          <h2 className={`text-3xl font-extrabold mb-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>AI Output Templates</h2>
-          <p className={`font-medium text-lg ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Select a template before recording to format the diagram style.</p>
-        </div>
-      </div>
-
-      {/* 🌟 SYMMETRIC SEARCH BAR (Centered, Separate from Filters) */}
-      <div className="flex justify-center w-full mb-8">
-        <div className="relative w-full max-w-2xl group">
-          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-            <Search size={20} className={isDarkMode ? 'text-slate-400 group-focus-within:text-indigo-400 transition-colors' : 'text-slate-500 group-focus-within:text-indigo-600 transition-colors'} />
+        {/* Compact Search Bar */}
+        <div className="relative w-full xl:w-80 shrink-0 group">
+          <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
+            <Search size={16} className={isDarkMode ? 'text-slate-400 group-focus-within:text-indigo-400 transition-colors' : 'text-slate-500 group-focus-within:text-indigo-600 transition-colors'} />
           </div>
           <input 
             type="text" 
-            placeholder="Search templates (e.g. 'Bug Triage')..." 
+            placeholder="Search templates..." 
             value={searchQuery} 
             onChange={(e) => setSearchQuery(e.target.value)} 
-            className={`w-full pl-12 pr-12 py-4 rounded-2xl font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm ${isDarkMode ? 'bg-[#1F263B]/60 border border-[#2E364F] text-white placeholder-slate-500 focus:bg-[#1A2033]' : 'bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-slate-50'}`}
+            className={`w-full pl-10 pr-10 py-3 rounded-2xl font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm ${isDarkMode ? 'bg-[#1F263B]/60 border border-[#2E364F] text-white placeholder-slate-500 focus:bg-[#1A2033]' : 'bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-slate-50'}`}
           />
-          <div className="absolute inset-y-0 right-4 flex items-center gap-2">
+          <div className="absolute inset-y-0 right-3 flex items-center gap-2">
             {searchQuery && (
-              <button onClick={() => setSearchQuery("")} className={`p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                <X size={16} />
+              <button onClick={() => setSearchQuery("")} className={`p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/10 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                <X size={14} />
               </button>
             )}
-            <div className={`hidden sm:flex items-center justify-center h-7 px-2 rounded-md border text-[11px] font-bold ${isDarkMode ? 'bg-[#131722] border-[#2A2F3D] text-slate-500' : 'bg-slate-100 border-slate-200 text-slate-400'}`}>
-              <Command size={12} className="mr-1"/> K
-            </div>
           </div>
-        </div>
-      </div>
-
-      {/* 🌟 STICKY FILTER PILLS (Fixed Offset & Glass Effect) */}
-      <div className="sticky top-20 z-40 flex justify-center w-full mb-8 pb-4">
-        <div className={`inline-flex items-center p-1.5 rounded-[1.5rem] shadow-sm border overflow-x-auto custom-scrollbar max-w-full backdrop-blur-xl ${isDarkMode ? 'bg-[#131722]/85 border-[#2A2F3D]' : 'bg-white/90 border-slate-200'}`}>
-          {displayCategories.map(cat => (
-            <button 
-              key={cat} 
-              onClick={() => setTemplateFilter(cat)} 
-              className={`relative px-5 py-2.5 text-sm font-bold rounded-2xl transition-all whitespace-nowrap shrink-0 ${currentFilter === cat ? (isDarkMode ? 'text-white' : 'text-slate-900') : (isDarkMode ? 'text-slate-400 hover:text-slate-200 hover:bg-[#1A2033]' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50')}`}
-            >
-              {currentFilter === cat && <motion.div layoutId="activeFilterBubble" className={`absolute inset-0 rounded-2xl shadow-sm border ${isDarkMode ? 'bg-[#1F263B] border-[#2E364F]' : 'bg-white border-slate-200'}`} transition={{ type: "spring", stiffness: 300, damping: 30 }} />}
-              <span className="relative z-10 flex items-center gap-1.5">
-                {cat === 'Favorites' && <Star size={14} className={currentFilter === cat ? 'text-amber-500 fill-amber-500' : 'text-slate-400'} />} 
-                {cat}
-              </span>
-            </button>
-          ))}
         </div>
       </div>
 
